@@ -7,7 +7,7 @@
         "start": "concurrently npm:start:client npm:start:server",
         "start:client": "cd angular && npm run start",
         "start:server": "cd nestjs && npm run start:coverage",
-        "nyc": "nyc report --report-dir ./coverage --temp-dir /Users/florianpascouau/Workspace/cypress-angular-nestjs-code-coverage-fullstack/angular/.nyc_output --reporter=lcov --reporter=clover --reporter=json"
+        "nyc": "nyc report --report-dir ./coverage --temp-dir /Users/florianpascouau/Workspace/cypress-angular-nestjs-code-coverage-fullstack/.nyc_output --reporter=lcov --reporter=clover --reporter=json"
     },
     "repository": {
         "type": "git",
@@ -29,6 +29,9 @@
     "homepage": "https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack#readme",
     "dependencies": {},
     "devDependencies": {
-        "concurrently": "^5.1.0"
+        "@cypress/code-coverage": "^1.11.0",
+        "concurrently": "^5.1.0",
+        "cypress": "^3.8.3",
+        "istanbul-lib-coverage": "^3.0.0"
     }
 }
