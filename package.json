@@ -1,0 +1,27 @@
+{
+  "name": "cypress-angular-nestjs-code-coverage-fullstack",
+  "version": "1.0.0",
+  "description": "A small repository to show how to run cypress full stack code coverage through Angular and Nestjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack.git"
+  },
+  "keywords": [
+    "cypress",
+    "angular",
+    "nestjs",
+    "code",
+    "coverage",
+    "fullstack"
+  ],
+  "author": "Florian Pascouau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack/issues"
+  },
+  "homepage": "https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack#readme"
+}
