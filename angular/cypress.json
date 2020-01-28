@@ -1,0 +1,10 @@
+{
+    "supportFile": "cypress/support/index.js",
+    "baseUrl": "http://localhost:4200/",
+    "ignoreTestFiles": "**/examples/*.js",
+    "env": {
+        "codeCoverage": {
+            "url": "http://localhost:3000/__coverage__"
+        }
+    }
+}

@@ -1,27 +1,34 @@
 {
-  "name": "cypress-angular-nestjs-code-coverage-fullstack",
-  "version": "1.0.0",
-  "description": "A small repository to show how to run cypress full stack code coverage through Angular and Nestjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack.git"
-  },
-  "keywords": [
-    "cypress",
-    "angular",
-    "nestjs",
-    "code",
-    "coverage",
-    "fullstack"
-  ],
-  "author": "Florian Pascouau",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack/issues"
-  },
-  "homepage": "https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack#readme"
+    "name": "cypress-angular-nestjs-code-coverage-fullstack",
+    "version": "1.0.0",
+    "description": "A small repository to show how to run cypress full stack code coverage through Angular and Nestjs",
+    "main": "index.js",
+    "scripts": {
+        "start": "concurrently npm:start:client npm:start:server",
+        "start:client": "cd angular && npm run start",
+        "start:server": "cd nestjs && npm run start:coverage",
+        "nyc": "nyc report --report-dir ./coverage --temp-dir /Users/florianpascouau/Workspace/cypress-angular-nestjs-code-coverage-fullstack/angular/.nyc_output --reporter=lcov --reporter=clover --reporter=json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack.git"
+    },
+    "keywords": [
+        "cypress",
+        "angular",
+        "nestjs",
+        "code",
+        "coverage",
+        "fullstack"
+    ],
+    "author": "Florian Pascouau",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack/issues"
+    },
+    "homepage": "https://github.com/flogh/cypress-angular-nestjs-code-coverage-fullstack#readme",
+    "dependencies": {},
+    "devDependencies": {
+        "concurrently": "^5.1.0"
+    }
 }
