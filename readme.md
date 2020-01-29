@@ -173,8 +173,8 @@ $ npm i -D @istanbuljs/nyc-config-typescript source-map-support ts-node
 npm install -D @cypress/code-coverage nyc istanbul-lib-coverage
 ```
 
-> We can try to open cypress again, select the previous folder, and launch the basic.spec.ts test  
-> At the end of the test should be ..
+> We can now start the ng serve, try to open cypress again, select the previous folder, and launch the basic.spec.ts test  
+> If everything went good, we should see at the end of the test 'aa' line
 
 > The raw json output is located in .nyc_output folder
 
