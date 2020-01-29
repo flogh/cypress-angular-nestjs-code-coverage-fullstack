@@ -1,11 +1,20 @@
-Before we begin this tutorial, make sure that you have installed globally @angular/cli, @nestjs, cypress, nyc.
+# Cypress Angular Nestjs Code Coverage Fullstack
+
+This repo is inspired by :  
+https://docs.cypress.io/guides/tooling/code-coverage.html#Examples  
+https://github.com/cypress-io/cypress-example-realworld  
+https://github.com/skylock/cypress-angular-coverage-example
+
+Before we begin, make sure that you have installed globally @angular/cli, @nestjs/cli, cypress, nyc.
 If it's not the case :
 
 ```
-$ npm i -g  @angular/cli @nestjs cypress nyc
+$ npm i -g  @angular/cli @nestjs/cli cypress nyc
 ```
 
-0. Init folder root project
+## Cypress Part
+
+1. Init folder root project
 
 ```
 $ touch cypress-angular-nestjs
@@ -19,20 +28,10 @@ $ cd cypress-angular-nestjs
 $ npm init
 ```
 
-1. We will then init the front side
+2. Install cypress `locally` as a dev dependency
 
 ```
-$ ng new angular
-```
-
-```
-$ cd angular
-```
-
-2. Install now cypress locally as a dev dependency
-
-```
-$ (npm install -D cypress)
+$ npm install -D cypress
 ```
 
 3. We will have to open cypress and select the 'cypress-angular-nestjs' folder
@@ -41,10 +40,12 @@ $ (npm install -D cypress)
 $ cypress open
 ```
 
-By opening the folder, you will generate the cypress.json and cypress folder.  
-You can quit 'cypress open' once done.
+> By opening the folder, you will generate the cypress.json and cypress folder.  
+> You can quit 'cypress open' once done.
 
 4. We will then edit the cypress.json like so :
+
+> // cypress.json
 
 ```
 {
@@ -54,8 +55,9 @@ You can quit 'cypress open' once done.
 }
 ```
 
-5. We will create a single test in this project, just to trigger the cypress code coverage.  
-   // cypress/integration/basic.spec.ts
+5. We will create a single test in this project, just to trigger the cypress code coverage.
+
+> // cypress/integration/basic.spec.ts
 
 ```
 describe('Basic Test', () => {
@@ -66,14 +68,9 @@ describe('Basic Test', () => {
 });
 ```
 
-6. Install ngx-build-plus, ... // TO DO
+6. Create this file
 
-```
-$ npm i -D ngx-build-plus
-```
-
-7. Create this file  
-   // cypress/coverage.webpack.js
+> // cypress/coverage.webpack.js
 
 ```
 module.exports = {
@@ -92,7 +89,45 @@ module.exports = {
 };
 ```
 
-8. Update angular/angular.json this way
+7. Add this at the end of the cypress/support/index.js file
+
+> // cypress/support/index.js
+
+```
+import '@cypress/code-coverage/support';
+```
+
+8. And update the cypress/plugins/index.js file code like this
+
+> // cypress/plugins/index.js
+
+```
+module.exports = (on, config) => {
+    on('task', require('@cypress/code-coverage/task'));
+};
+```
+
+## Angular Part
+
+1. We will then init the front part
+
+```
+$ ng new angular
+```
+
+```
+$ cd angular
+```
+
+2. Install ngx-build-plus to extends the Angular CLI's build process and instrument the code
+
+```
+$ npm i -D ngx-build-plus
+```
+
+3. Update angular.json to use ngx-build with extra config
+
+> // angular/angular.json
 
 ```
 "serve": {
@@ -109,20 +144,21 @@ module.exports = {
 },
 ```
 
-9. Install istanbul-instrumenter-loader  
-   // Inside angular/
+4. Instrument JS files with istanbul-lib-instrument for subsequent code coverage reporting
 
 ```
 $ npm i -D istanbul-instrumenter-loader
 ```
 
-10. Install following packages
+5. Make Istanbul understand your Typescript source files
 
 ```
 $ npm i -D @istanbuljs/nyc-config-typescript source-map-support ts-node
 ```
 
-11. Update package json and add
+6. Make sure that Istanbul takes advantage of it by adding this configuration in your package.json
+
+> // angular/package.json
 
 ```
 "nyc": {
@@ -131,34 +167,22 @@ $ npm i -D @istanbuljs/nyc-config-typescript source-map-support ts-node
 }
 ```
 
-12. Install Pckg
+7. Add cypress code coverage plugin
 
 ```
 npm install -D @cypress/code-coverage nyc istanbul-lib-coverage
 ```
 
-13. Add this at the end of the cypress/support/index.js file
+> We can try to open cypress again, select the previous folder, and launch the basic.spec.ts test  
+> At the end of the test should be ..
 
-```
-import '@cypress/code-coverage/support';
-```
+> The raw json output is located in .nyc_output folder
 
-14. And update the cypress/plugins/index.js file code like this
+> Open cypress/lcov-report/index.html to see the magic
 
-```
-module.exports = (on, config) => {
-    on('task', require('@cypress/code-coverage/task'));
-};
-```
+## Nestjs Part
 
-15. We can try to open cypress, select the previous folder, and launch the basic.spec.ts test  
-    At the en of the test should be ..  
-    The raw json output is located in .nyc_output folder  
-    Open cypress/lcov-report/index.html to see the magic
-
-// Setting up Nestjs
-
-1. At the root folder
+1. At the project root
 
 ```
 $ nest new nestjs
@@ -170,11 +194,15 @@ $ cd nestjs
 
 2. Add script to package.json
 
+> // nestjs/package.json
+
 ```
 "start:coverage": "nyc --silent node server"
 ```
 
-3. Add a route inside the app.controller
+3. Add a get route inside the app.controller
+
+> // nestjs/src/app.controller.ts
 
 ```
 @Get('__coverage__')
@@ -185,12 +213,23 @@ public getCoverage() {
 }
 ```
 
-4. Update angular/cypress.json
+4. Update cypress.json and add the backend url like so
+
+> // cypress.json
 
 ```
-"env": {
-    "codeCoverage": {
-        "url": "http://localhost:3000/__coverage__"
+{
+    "supportFile": "cypress/support/index.js",
+    "baseUrl": "http://localhost:4200/",
+    "ignoreTestFiles": "**/examples/*.js",
+    "env": {
+        "codeCoverage": {
+            "url": "http://localhost:3000/__coverage__"
+        }
     }
 }
 ```
+
+> You can now re-run the basic.spec.ts test to regenerate the coverage folder which would now contain both angular and nestjs code coverage
+
+## That's it !
