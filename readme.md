@@ -230,6 +230,6 @@ public getCoverage() {
 }
 ```
 
-> You can now re-run the basic.spec.ts test to regenerate the coverage folder which would now contain both angular and nestjs code coverage
+> You can now restart ng serve, nest start, open cypress and re-run the basic.spec.ts test to regenerate the coverage folder which would now contain both angular and nestjs code coverage
 
 ## That's it !
