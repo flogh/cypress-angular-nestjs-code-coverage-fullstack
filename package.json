@@ -4,10 +4,14 @@
   "description": "A small repository to show how to run cypress full stack code coverage through Angular and Nestjs",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm run ci:client && npm run ci:server",
+    "ci:client": "cd angular && npm ci",
+    "ci:server": "cd nestjs && npm ci",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently npm:start:angular npm:start:nestjs",
+    "start": "concurrently npm:start:angular npm:start:nestjs npm:start:cypress",
     "start:angular": "cd angular && npm run start",
-    "start:nestjs": "cd nestjs && npm run start:coverage"
+    "start:nestjs": "cd nestjs && npm run start:coverage",
+    "start:cypress": "cypress open"
   },
   "repository": {
     "type": "git",
