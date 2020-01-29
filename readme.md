@@ -17,7 +17,7 @@ $ npm i -g  @angular/cli @nestjs/cli cypress nyc
 1. Init folder root project
 
 ```
-$ touch cypress-angular-nestjs
+$ mkdir cypress-angular-nestjs
 ```
 
 ```
@@ -28,10 +28,10 @@ $ cd cypress-angular-nestjs
 $ npm init
 ```
 
-2. Install cypress `locally` as a dev dependency
+2. Install these packages `locally` now as dev dependencies
 
 ```
-$ npm install -D cypress
+$ npm install -D cypress @cypress/code-coverage istanbul-lib-coverage
 ```
 
 3. We will have to open cypress and select the 'cypress-angular-nestjs' folder
@@ -51,7 +51,7 @@ $ cypress open
 {
     "supportFile": "cypress/support/index.js",
     "baseUrl": "http://localhost:4200/",
-    "ignoreTestFiles": "**/examples/*.js",
+    "ignoreTestFiles": "**/examples/*.js"
 }
 ```
 
@@ -173,8 +173,9 @@ $ npm i -D @istanbuljs/nyc-config-typescript source-map-support ts-node
 npm install -D @cypress/code-coverage nyc istanbul-lib-coverage
 ```
 
-> We can now start the ng serve, try to open cypress again, select the previous folder, and launch the basic.spec.ts test  
-> If everything went good, we should see at the end of the test 'aa' line
+> We can now start the ng serve, try to open cypress again, select the previous folder, and launch the basic.spec.ts test
+
+> If everything went good, we should see at the end of the test steps, the `AFTER ALL` line : `TASK coverageReport`
 
 > The raw json output is located in .nyc_output folder
 
@@ -197,7 +198,7 @@ $ cd nestjs
 > // nestjs/package.json
 
 ```
-"start:coverage": "nyc --silent node server"
+"start:coverage": "nyc --silent nest start"
 ```
 
 3. Add a get route inside the app.controller
@@ -230,6 +231,6 @@ public getCoverage() {
 }
 ```
 
-> You can now restart ng serve, nest start, open cypress and re-run the basic.spec.ts test to regenerate the coverage folder which would now contain both angular and nestjs code coverage
+> You can now start ng serve, nest start:coverage, open cypress and re-run the basic.spec.ts test to regenerate the coverage folder which would now contain both angular and nestjs code coverage
 
 ## That's it !
